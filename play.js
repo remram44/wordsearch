@@ -53,6 +53,10 @@ function loadParams(str) {
   return {width, height, grid, words};
 }
 
+let gridElem = document.getElementById('wordsearch-grid');
+let width, height, grid, gridElems, words, wordsFound;
+let start = null;
+
 window.addEventListener('load', function() {
   let params = loadParams(window.location.search);
   if(params.error) {
@@ -62,10 +66,14 @@ window.addEventListener('load', function() {
     return;
   }
 
-  let {width, height, grid, words} = params;
+  width = params.width;
+  height = params.height;
+  grid = params.grid;
+  words = params.words;
+  wordsFound = {};
 
   // Fill the grid element in the page with the letters
-  let gridElem = document.getElementById('wordsearch-grid');
+  gridElems = {};
   gridElem.innerHTML = '';
   for(let y = 0; y < height; ++y) {
     let rowElem = document.createElement('tr');
@@ -73,6 +81,8 @@ window.addEventListener('load', function() {
       let cellElem = document.createElement('td');
       cellElem.innerText = grid[y * width + x];
       rowElem.appendChild(cellElem);
+      gridElems[x + '-' + y] = cellElem;
+      cellElem.addEventListener('click', function() { clicked(x, y); });
     }
     gridElem.appendChild(rowElem);
   }
@@ -87,3 +97,38 @@ window.addEventListener('load', function() {
     listElem.appendChild(wordElem);
   }
 });
+
+function clicked(x, y) {
+  if(start === null) {
+    // Select start of word
+    start = [x, y];
+
+    gridElems[x + '-' + y].classList.add('selected');
+    for(direction = 0; direction < directions.length; ++direction) {
+      let dx = directions[direction][0];
+      let dy = directions[direction][1];
+      let ox = x + dx;
+      let oy = y + dy;
+      while(ox >= 0 && ox < width && oy >= 0 && oy < height) {
+        gridElems[ox + '-' + oy].classList.add('lined');
+        ox += dx;
+        oy += dy;
+      }
+    }
+
+    gridElem.classList.add('selected');
+  } else {
+    // Select end of word
+    start = null;
+
+    // Reset styles
+    for(let y = 0; y < height; ++y) {
+      for(let x = 0; x < width; ++x) {
+        let elem = gridElems[x + '-' + y];
+        elem.classList.remove('selected');
+        elem.classList.remove('lined');
+      }
+    }
+    gridElem.classList.remove('selected');
+  }
+}
