@@ -115,6 +115,7 @@ options.addEventListener('submit', function(e) {
     filteredWords.push(word);
   }
   if(filteredWords.length === 0) {
+    document.getElementById('wordsearch-play-button').disabled = true;
     return;
   }
   options.elements.words.value = filteredWords.join('\n');
@@ -278,4 +279,16 @@ function generateGrid(words, width, height, backwards) {
     wordElem.innerText = listedWords[i];
     listElem.appendChild(wordElem);
   }
+
+  // Prepare the "play" button
+  let playForm = document.getElementById('wordsearch-play-form');
+  playForm.elements.width.value = width;
+  playForm.elements.height.value = height;
+  playForm.elements.grid.value = grid.join('');
+  playForm.elements.words.value = listedWords.join('-');
+  document.getElementById('wordsearch-play-button').disabled = false;
 }
+
+window.addEventListener('load', function() {
+  document.getElementById('wordsearch-play-button').disabled = true;
+});

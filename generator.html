@@ -45,6 +45,14 @@ table.reveal td.in-word {
       </p>
     </form>
 
+    <form action="play.html" method="get" id="wordsearch-play-form">
+      <input type="hidden" name="width">
+      <input type="hidden" name="height">
+      <input type="hidden" name="grid">
+      <input type="hidden" name="words">
+      <input type="submit" id="wordsearch-play-button" value="Play" disabled>
+    </form>
+
     <table id="wordsearch-grid"></table>
     <p>
       <input type="checkbox" id="wordsearch-reveal">
