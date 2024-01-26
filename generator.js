@@ -156,7 +156,11 @@ function generateGrid(words, width, height, backwards) {
 
     let possibleLocations = [];
     // Build list of possible locations with count of constraints
-    for(let direction = 0; direction < directions.length; ++direction) {
+    let numDirections = directions.length;
+    if(!backwards) {
+      numDirections = 5;
+    }
+    for(let direction = 0; direction < numDirections; ++direction) {
       let dx = directions[direction][0];
       let dy = directions[direction][1];
 
