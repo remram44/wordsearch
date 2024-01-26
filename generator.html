@@ -14,6 +14,10 @@
 #wordsearch-grid {
   font-family: "Courier";
 }
+
+table.reveal td.in-word {
+  font-weight: bold;
+}
     </style>
   </head>
   <body>
@@ -42,6 +46,11 @@
     </form>
 
     <table id="wordsearch-grid"></table>
+    <p>
+      <input type="checkbox" id="wordsearch-reveal">
+      <label for="wordsearch-reveal">Show words</label>
+    </p>
+
     <p id="wordsearch-text"></p>
     <ul id="wordsearch-list"></ul>
 

@@ -122,6 +122,14 @@ options.addEventListener('submit', function(e) {
   generateGrid(filteredWords, width, height, backwards);
 });
 
+document.getElementById('wordsearch-reveal').addEventListener('change', function() {
+  if(this.checked) {
+    document.getElementById('wordsearch-grid').classList.add('reveal');
+  } else {
+    document.getElementById('wordsearch-grid').classList.remove('reveal');
+  }
+});
+
 function generateGrid(words, width, height, backwards) {
   // Sort word list by decreasing length
   words = words.slice();
@@ -243,7 +251,7 @@ function generateGrid(words, width, height, backwards) {
       let cellElem = document.createElement('td');
       if(gridPicked[y * width + x]) {
         gridSet++;
-        //cellElem.style = 'font-weight: bold';
+        cellElem.className = 'in-word';
       }
       cellElem.innerText = grid[y * width + x];
       rowElem.appendChild(cellElem);
