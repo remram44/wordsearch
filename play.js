@@ -54,7 +54,7 @@ function loadParams(str) {
 }
 
 let gridElem = document.getElementById('wordsearch-grid');
-let width, height, grid, gridElems, words, wordsFound;
+let width, height, grid, gridElems, words, wordsFound, wordsElems;
 let start = null;
 
 window.addEventListener('load', function() {
@@ -70,7 +70,7 @@ window.addEventListener('load', function() {
   height = params.height;
   grid = params.grid;
   words = params.words;
-  wordsFound = {};
+  wordsFound = 0;
 
   // Fill the grid element in the page with the letters
   gridElems = {};
@@ -88,6 +88,7 @@ window.addEventListener('load', function() {
   }
 
   // List the words to be found
+  wordsElems = {};
   let listElem = document.getElementById('wordsearch-list');
   listElem.innerHTML = '';
   document.getElementById('wordsearch-text').innerText = 'The following ' + words.length + ' words have been hidden above:';
@@ -95,6 +96,7 @@ window.addEventListener('load', function() {
     let wordElem = document.createElement('li');
     wordElem.innerText = words[i];
     listElem.appendChild(wordElem);
+    wordsElems[words[i]] = wordElem;
   }
 });
 
@@ -119,7 +121,11 @@ function clicked(x, y) {
     gridElem.classList.add('selected');
   } else {
     // Select end of word
+    let pos1 = start;
+    let pos2 = [x, y];
     start = null;
+    selectWord(pos1, pos2);
+    selectWord(pos2, pos1);
 
     // Reset styles
     for(let y = 0; y < height; ++y) {
@@ -130,5 +136,49 @@ function clicked(x, y) {
       }
     }
     gridElem.classList.remove('selected');
+  }
+}
+
+function selectWord(start, end) {
+  for(let direction = 0; direction < directions.length; ++direction) {
+    let dx = directions[direction][0];
+    let dy = directions[direction][1];
+
+    let word = [];
+    let hitEnd = false;
+    {
+      let [x, y] = start;
+      while(x >= 0 && x < width && y >= 0 && y < height) {
+        word.push(grid[y * width + x]);
+        if(x === end[0] && y === end[1]) {
+          hitEnd = true;
+          break;
+        }
+        x += dx;
+        y += dy;
+      }
+    }
+    if(!hitEnd) {
+      continue;
+    }
+
+    word = word.join('');
+    if(words.indexOf(word) === -1) {
+      continue;
+    }
+
+    wordsElems[word].classList.add('found');
+
+    {
+      let [x, y] = start;
+      while(x >= 0 && x < width && y >= 0 && y < height) {
+        gridElems[x + '-' + y].classList.add('found');
+        if(x === end[0] && y === end[1]) {
+          break;
+        }
+        x += dx;
+        y += dy;
+      }
+    }
   }
 }

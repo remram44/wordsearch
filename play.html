@@ -10,6 +10,10 @@
 #wordsearch-list li {
   list-style-type: none;
 }
+#wordsearch-list li.found {
+  text-decoration: line-through;
+  color: #999999;
+}
 
 #wordsearch-grid {
   font-family: "Courier";
@@ -23,6 +27,9 @@
 }
 #wordsearch-grid.selected td.lined {
   color: black;
+}
+#wordsearch-grid td.found {
+  font-weight: bold;
 }
 
 #wordsearch-error {
