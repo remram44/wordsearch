@@ -10,6 +10,11 @@ function loadWordList(name) {
   });
 }
 
+document.getElementById('load-default').addEventListener('click', function(e) {
+  e.preventDefault();
+  loadWordList('words');
+});
+
 document.getElementById('load-planets').addEventListener('click', function(e) {
   e.preventDefault();
   loadWordList('planets');
@@ -18,6 +23,10 @@ document.getElementById('load-planets').addEventListener('click', function(e) {
 document.getElementById('load-gems').addEventListener('click', function(e) {
   e.preventDefault();
   loadWordList('gems');
+});
+
+window.addEventListener('load', function() {
+  loadWordList('words');
 });
 
 
