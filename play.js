@@ -12,6 +12,71 @@ let directions = [
   [-1, -1],
 ];
 
+function checkWordInGrid(word, grid, width, height, x, y, dx, dy) {
+  for(let i = 0; i < word.length; ++i) {
+    if(x < 0 || x >= width || y < 0 || y >= height) {
+      return false;
+    }
+    if(grid[y * width + x] !== word[i]) {
+      return false;
+    }
+    x += dx;
+    y += dy;
+  }
+  return true;
+}
+
+function checkWordsInGridDir(words, grid, width, height, wordsFound, dx, dy, sx, sy, dsx, dsy) {
+  while(sx >= 0 && sx < width && sy >= 0 && sy < height) {
+    let x = sx;
+    let y = sy;
+    while(x >= 0 && x < width && y >= 0 && y < height) {
+      for(let i = 0; i < words.length; ++i) {
+        if(checkWordInGrid(words[i], grid, width, height, x, y, dx, dy)) {
+          wordsFound[words[i]] = true;
+        }
+      }
+
+      x += dx;
+      y += dy;
+    }
+
+    sx += dsx;
+    sy += dsy;
+  }
+}
+
+function checkWordsInGrid(words, grid, width, height) {
+  let wordsFound = {};
+
+  for(let direction = 0; direction < directions.length; ++direction) {
+    // Reading direction
+    let dx = directions[direction][0];
+    let dy = directions[direction][1];
+
+    if(dx === 1) {
+      checkWordsInGridDir(words, grid, width, height, wordsFound, dx, dy, 0, 0, 0, 1);
+    }
+    if(dx === -1) {
+      checkWordsInGridDir(words, grid, width, height, wordsFound, dx, dy, width - 1, 0, 0, 1);
+    }
+    if(dy === 1) {
+      checkWordsInGridDir(words, grid, width, height, wordsFound, dx, dy, 0, 0, 1, 0);
+    }
+    if(dy === -1) {
+      checkWordsInGridDir(words, grid, width, height, wordsFound, dx, dy, 0, height - 1, 1, 0);
+    }
+  }
+
+  let wordsNotFound = [];
+  for(let i = 0; i < words.length; ++i) {
+    if(!wordsFound[words[i]]) {
+      wordsNotFound.push(words[i]);
+    }
+  }
+  return wordsNotFound;
+}
+
 function loadParams(str) {
   let params = new URLSearchParams(str);
 
@@ -48,7 +113,14 @@ function loadParams(str) {
     }
   }
 
-  // TODO: Check words are in the grid
+  let wordsNotFound = checkWordsInGrid(words, grid, width, height);
+  if(wordsNotFound.length !== 0) {
+    let notFound = wordsNotFound.slice(0, 3).join(', ');
+    if(wordsNotFound.length > 3) {
+      notFound += '...';
+    }
+    return {error: 'Missing words in grid: ' + notFound};
+  }
 
   return {width, height, grid, words};
 }
