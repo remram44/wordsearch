@@ -19,7 +19,7 @@ table.reveal td.in-word {
   color: #999999;
 }
 #wordsearch-grid.selected td.selected {
-  background-color: red;
+  background-color: rgba(255, 154, 0, .4);
   color: black;
 }
 #wordsearch-grid.selected td.lined {
@@ -32,3 +32,7 @@ table.reveal td.in-word {
 #wordsearch-error {
   color: red;
 }
+
+.checkbox-xl {
+  scale: 1.7;
+ }
