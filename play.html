@@ -1,51 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Word Search</title>
-    <style>
-#wordsearch-list {
-  padding-left: 0;
-}
-#wordsearch-list li {
-  list-style-type: none;
-}
-#wordsearch-list li.found {
-  text-decoration: line-through;
-  color: #999999;
-}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Word Search</title>
+  <link rel="stylesheet" type="text/css" href="css/custom.css" />
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+</head>
+<body>
 
-#wordsearch-grid {
-  font-family: "Courier";
-}
-#wordsearch-grid.selected td {
-  color: #999999;
-}
-#wordsearch-grid.selected td.selected {
-  font-weight: bold;
-  color: black;
-}
-#wordsearch-grid.selected td.lined {
-  color: black;
-}
-#wordsearch-grid td.found {
-  font-weight: bold;
-}
+<nav class="navbar navbar-expand-lg bg-light mb-5" data-bs-theme="light">
+  <div class="container">
+    <a class="navbar-brand" href="#">Wordsearch</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor03">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="generator.html">Generate grid</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Play</a>
+          <span class="visually-hidden">(current)</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-#wordsearch-error {
-  color: red;
-}
-    </style>
-  </head>
-  <body>
-    <p id="wordsearch-error"></p>
+<main class="container">
 
-    <table id="wordsearch-grid"></table>
+  <p id="wordsearch-error"></p>
 
-    <p id="wordsearch-text"></p>
-    <ul id="wordsearch-list"></ul>
+  <p id="wordsearch-text"></p>
+  <ul id="wordsearch-list"></ul>
 
-    <script src="play.js"></script>
-  </body>
+  <table id="wordsearch-grid"></table>
+
+</main>
+
+<script src="js/play.js"></script>
+</body>
 </html>

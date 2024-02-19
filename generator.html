@@ -1,68 +1,116 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Word Search</title>
-    <style>
-#wordsearch-list {
-  padding-left: 0;
-}
-#wordsearch-list li {
-  list-style-type: none;
-}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Word Search</title>
+  <link rel="stylesheet" type="text/css" href="css/custom.css" />
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+</head>
 
-#wordsearch-grid {
-  font-family: "Courier";
-}
+<nav class="navbar navbar-expand-lg bg-light mb-5" data-bs-theme="light">
+  <div class="container">
+    <a class="navbar-brand" href="#">Wordsearch</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor03">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Generate grid
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-disabled="true">Play</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-table.reveal td.in-word {
-  font-weight: bold;
-}
-    </style>
-  </head>
-  <body>
-    <form id="wordsearch-options">
-      <p>
-        Width:
-        <input type="number" name="width" min="3" max="100" value="30">
-      </p>
-      <p>
-        Height:
-        <input type="number" name="height" min="3" max="100" value="30">
-      </p>
+<body>
+<main class="container">
+
+  <form id="wordsearch-options">
+
+    <div class="row">
+      <label for="width" class="col-sm-2 col-form-label col-form-label-lg">Width</label>
+      <div class="col-sm-10">
+        <input type="number" min="3" max="100" value="30" class="form-control form-control-lg" id="width" name="width" placeholder="Pick a width between 3-100"><small class="text-muted">Pick a grid width between 3-100.</small>
+      </div>
+    </div>
+
+    <div class="row">
+      <label for="height" class="col-sm-2 col-form-label col-form-label-lg">Height</label>
+      <div class="col-sm-10">
+        <input type="number" min="3" max="100" value="30" class="form-control form-control-lg" id="height" name="height" placeholder="Pick a width between 3-100"><small class="text-muted">Pick a grid height between 3-100.</small>
+      </div>
+    </div>
+
+    <div class="row">
       <p>
         <input type="checkbox" name="backwards" id="backwards" checked>
         <label for="backwards">Allow "backwards" words</label>
       </p>
+    </div>
+
+    <div class="row">
+      <p>Pick the words to find:</p>
+
+      <div class="btn-group btn-group-lg" role="group" aria-label="Lists of words to choose from">
+        <input type="radio" class="btn-check" name="load-planets" id="load-planets" autocomplete="off">
+        <label class="btn btn-outline-primary" for="load-planets">Planets</label>
+
+        <input type="radio" class="btn-check" name="load-gems" id="load-gems" autocomplete="off">
+        <label class="btn btn-outline-primary" for="load-gems">Gems</label>
+
+        <input type="radio" class="btn-check" name="load-3" id="load-3" autocomplete="off">
+        <label class="btn btn-outline-primary" for="load-3">List 3</label>
+
+        <input type="radio" class="btn-check" name="load-4" id="load-4" autocomplete="off">
+        <label class="btn btn-outline-primary" for="load-4">List 4</label>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <textarea name="words" class="mt-3"></textarea>
       <p>
-        Word list:
-        <button id="load-planets">Planets</button>
-        <button id="load-gems">Gems</button>
+        <input type="checkbox" id="wordsearch-reveal">
+        <label for="wordsearch-reveal">Show words</label>
       </p>
-      <textarea name="words"></textarea>
-      <p>
-        <input type="submit" value="Generate">
-      </p>
-    </form>
+    </div>
 
-    <form action="play.html" method="get" id="wordsearch-play-form">
-      <input type="hidden" name="width">
-      <input type="hidden" name="height">
-      <input type="hidden" name="grid">
-      <input type="hidden" name="words">
-      <input type="submit" id="wordsearch-play-button" value="Play" disabled>
-    </form>
+    <button type="submit" class="btn btn-outline-primary btn-lg mt-3">Generate</button>
+  </form>
 
-    <table id="wordsearch-grid"></table>
-    <p>
-      <input type="checkbox" id="wordsearch-reveal">
-      <label for="wordsearch-reveal">Show words</label>
-    </p>
+  <div class="row">
+    <div class="col">
+      <p id="wordsearch-text"></p>
+      <ul id="wordsearch-list"></ul>
+    </div>
 
-    <p id="wordsearch-text"></p>
-    <ul id="wordsearch-list"></ul>
+    <div class="col">
+      <table id="wordsearch-grid"></table>
+    </div>
+  </div>
 
-    <script src="generator.js"></script>
-  </body>
+  <form action="play.html" method="get" id="wordsearch-play-form">
+    <input type="hidden" name="width">
+    <input type="hidden" name="height">
+    <input type="hidden" name="grid">
+    <input type="hidden" name="words">
+    <button type="submit" class="btn btn-outline-primary btn-lg" id="wordsearch-play-button" disabled>Play</button>
+  </form>
+
+</main>
+<script src="js/generator.js"></script>
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+</body>
 </html>
