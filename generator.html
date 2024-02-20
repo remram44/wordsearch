@@ -10,7 +10,7 @@
 
 <nav class="navbar navbar-expand-lg bg-light mb-5" data-bs-theme="light">
   <div class="container">
-    <a class="navbar-brand" href="#">Wordsearch</a>
+    <a class="navbar-brand" href="generator.html">Wordsearch</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -90,8 +90,7 @@
 
   <div class="row">
     <div class="col">
-      <!-- TODO hide this checkbox until the 'generate' button is clicked -->
-      <div class="form-check-prepend reveal-toggle">
+      <div id="answers-check" class="form-check-prepend reveal-toggle d-none">
         <label for="wordsearch-reveal" class="form-input-label lead">Reveal answers</label>
         <input type="checkbox" class="form-check-input checkbox-xl pull-right" name="wordsearch-reveal" id="wordsearch-reveal" >
       </div>

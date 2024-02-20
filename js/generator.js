@@ -62,6 +62,9 @@ options.addEventListener('submit', function(e) {
   options.elements.words.value = filteredWords.join('\n');
 
   generateGrid(filteredWords, width, height, backwards);
+
+  // show 'reveal answers' checkbox
+  document.getElementById('answers-check').classList.remove('d-none');
 });
 
 document.getElementById('wordsearch-reveal').addEventListener('change', function() {
@@ -233,4 +236,5 @@ function generateGrid(words, width, height, backwards) {
 
 window.addEventListener('load', function() {
   document.getElementById('wordsearch-play-button').disabled = true;
+  document.getElementById('answers').classList.add('d-none');
 });
