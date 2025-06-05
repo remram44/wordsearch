@@ -11,12 +11,10 @@ function loadWordList(name) {
 }
 
 document.getElementById('load-planets').addEventListener('click', function(e) {
-  e.preventDefault();
   loadWordList('planets');
 });
 
 document.getElementById('load-gems').addEventListener('click', function(e) {
-  e.preventDefault();
   loadWordList('gems');
 });
 
@@ -64,6 +62,9 @@ options.addEventListener('submit', function(e) {
   options.elements.words.value = filteredWords.join('\n');
 
   generateGrid(filteredWords, width, height, backwards);
+
+  // show 'reveal answers' checkbox
+  document.getElementById('answers-check').classList.remove('d-none');
 });
 
 document.getElementById('wordsearch-reveal').addEventListener('change', function() {
@@ -215,7 +216,8 @@ function generateGrid(words, width, height, backwards) {
     }
   }
   density = gridSet / (width * height);
-  document.getElementById('wordsearch-text').innerText = 'The following ' + placedCount + ' words have been hidden above (from a list of ' + words.length + ' words, density=' + density + '):';
+
+  document.getElementById('wordsearch-text').innerText = 'The following ' + placedCount + ' words have been hidden:';
   listedWords.sort();
   for(let i = 0; i < listedWords.length; ++i) {
     let wordElem = document.createElement('li');
@@ -234,4 +236,5 @@ function generateGrid(words, width, height, backwards) {
 
 window.addEventListener('load', function() {
   document.getElementById('wordsearch-play-button').disabled = true;
+  document.getElementById('answers').classList.add('d-none');
 });

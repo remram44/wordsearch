@@ -1,0 +1,38 @@
+#wordsearch-list {
+  padding-left: 0;
+}
+
+#wordsearch-list li {
+  list-style-type: none;
+}
+
+#wordsearch-list li.found {
+  text-decoration: line-through;
+  color: #999999;
+}
+
+table.reveal td.in-word {
+  background-color: #FFFF00;
+}
+
+#wordsearch-grid.selected td {
+  color: #999999;
+}
+#wordsearch-grid.selected td.selected {
+  background-color: rgba(255, 154, 0, .4);
+  color: black;
+}
+#wordsearch-grid.selected td.lined {
+  color: black;
+}
+#wordsearch-grid td.found {
+  background-color: #FFFF00;
+}
+
+#wordsearch-error {
+  color: red;
+}
+
+.checkbox-xl {
+  scale: 1.7;
+ }
